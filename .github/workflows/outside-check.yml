@@ -10,19 +10,31 @@ jobs:
       - name: DNS
         run: |
           echo "A:"; dig +short loopny.net A
+          echo "AAAA:"; dig +short loopny.net AAAA
           echo "www:"; dig +short www.loopny.net
+          echo "CAA:"; dig +short loopny.net CAA
+          echo "A at 8.8.8.8:"; dig +short @8.8.8.8 loopny.net A
+          echo "A at 1.1.1.1:"; dig +short @1.1.1.1 loopny.net A
+          echo "NS:"; dig +short loopny.net NS
+      - name: Certificate
+        run: |
+          for h in loopny.net www.loopny.net; do
+            echo "== $h"
+            echo | openssl s_client -connect $h:443 -servername $h 2>/dev/null | openssl x509 -noout -subject -ext subjectAltName -enddate || echo "no cert"
+          done
       - name: Site
         run: |
-          curl -sS -o p.html -w "https www -> %{http_code} %{content_type}\n" https://www.loopny.net/ || true
+          curl -sS -o p.html -w "https apex -> %{http_code} %{content_type}\n" https://loopny.net/ || true
           grep -o "<title>[^<]*</title>" p.html || true
           grep -c "AKfycbxjeeev" p.html | sed 's/^/form address found: /' || true
+          curl -sS -o /dev/null -w "http apex -> %{http_code} %{redirect_url}\n" http://loopny.net/ || true
+          curl -sS -o /dev/null -w "https www -> %{http_code} %{redirect_url}\n" https://www.loopny.net/ || true
           curl -sS -o /dev/null -w "http www -> %{http_code} %{redirect_url}\n" http://www.loopny.net/ || true
-          curl -sS -o /dev/null -w "font -> %{http_code} %{content_type}\n" https://www.loopny.net/fonts/PublicSans.ttf || true
-          curl -sS -o /dev/null -w "favicon -> %{http_code} %{content_type}\n" https://www.loopny.net/favicon.svg || true
-          curl -sS -o /dev/null -w "http apex -> %{http_code} %{redirect_url}\n" http://loopny.net/ || echo "apex not resolving here yet"
+          curl -sS -o /dev/null -w "font -> %{http_code} %{content_type}\n" http://loopny.net/fonts/PublicSans.ttf || true
+          curl -sS -o /dev/null -w "favicon -> %{http_code} %{content_type}\n" http://loopny.net/favicon.svg || true
           curl -sS -o /dev/null -w "github.io -> %{http_code} %{redirect_url}\n" https://mordy-s.github.io/loopny-site/ || true
       - name: Form endpoint (no email is sent)
         run: |
           EP="https://script.google.com/macros/s/AKfycbxjeeev_iqqsulmRYHKAR9684ipTQu64UxlCMYqEh_EwuQe2hs2GqIiDYSZO5LyFtVQ/exec"
-          curl -sS -L -D h.txt -H "Content-Type: text/plain;charset=UTF-8" -H "Origin: https://www.loopny.net" --data '{"name":"check","message":"check","email":"check@example.com","website":"bot","ms":5000}' "$EP"; echo
+          curl -sS -L -D h.txt -H "Content-Type: text/plain;charset=UTF-8" -H "Origin: https://loopny.net" --data '{"name":"check","message":"check","email":"check@example.com","website":"bot","ms":5000}' "$EP"; echo
           grep -i "access-control-allow-origin" h.txt || echo "no CORS header seen"
