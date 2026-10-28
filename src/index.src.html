@@ -1,0 +1,508 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Loop | Automations for what's next</title>
+<meta name="description" content="Loop builds automations, small apps and AI workflows for offices and businesses. Tell us what you still do by hand.">
+<link rel="canonical" href="https://loopny.net/">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://loopny.net/">
+<meta property="og:title" content="Loop | Automations for what's next">
+<meta property="og:description" content="Loop builds automations, small apps and AI workflows for offices and businesses. Tell us what you still do by hand.">
+<meta name="theme-color" content="#0D033B">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="preload" href="fonts/PublicSans.ttf" as="font" type="font/ttf" crossorigin>
+<style>
+@font-face{font-family:"Public Sans";src:url(fonts/PublicSans.ttf) format("truetype");font-weight:100 900;font-display:swap}
+:root{
+  --navy:#0D033B;--navy-2:#170B52;--navy-deep:#09022B;
+  --white:#FFFFFF;--near-white:#F9F9FC;--gray:#EEF0F6;--wash:#F7F7FB;
+  --violet:#9C53E2;--peri:#6B7AFE;--mauve:#A55FA5;
+  --muted:#565B78;--on-navy:rgba(249,249,252,.76);--line:#E1E4EF;
+  --grad:linear-gradient(100deg,#9C53E2,#6B7AFE);
+  --font:"Public Sans",Arial,sans-serif;
+  --shadow:0 12px 32px rgba(13,3,59,.08),0 2px 6px rgba(13,3,59,.05);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+body{margin:0;font-family:var(--font);font-weight:400;font-size:16px;line-height:1.6;color:var(--navy);background:var(--white);-webkit-font-smoothing:antialiased}
+a{color:inherit}
+h1,h2,h3{margin:0;font-weight:300;letter-spacing:-.015em}
+p{margin:0}
+.wrap{max-width:1180px;margin:0 auto;padding:0 24px}
+.eyebrow{display:block;font-size:12px;font-weight:600;letter-spacing:.28em;text-transform:uppercase;color:var(--muted)}
+.on-navy .eyebrow{color:var(--on-navy)}
+.grad-text{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+:focus-visible{outline:2px solid var(--peri);outline-offset:3px}
+.ico{width:24px;height:24px;fill:none;stroke:currentColor;stroke-width:1.75;stroke-linecap:round;stroke-linejoin:round;flex:none}
+.ico-grad{stroke:url(#ig)}
+
+/* buttons */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:50px;padding:0 28px;border-radius:999px;border:1px solid transparent;font:600 13px/1 var(--font);letter-spacing:.16em;text-transform:uppercase;text-decoration:none;cursor:pointer;transition:transform .15s ease,background-color .15s ease,border-color .15s ease}
+.btn:hover{transform:translateY(-1px)}
+.btn .ico{width:18px;height:18px}
+.btn-light{background:var(--white);color:var(--navy)}
+.btn-ghost{color:var(--white);border-color:rgba(249,249,252,.5)}
+.btn-ghost:hover{border-color:var(--white)}
+.btn-navy{background:var(--navy);color:var(--white)}
+.btn-navy:hover{background:var(--navy-2)}
+.btn[disabled]{opacity:.6;cursor:wait;transform:none}
+
+/* header */
+.site-head{position:relative;z-index:3}
+.site-head .wrap{display:flex;align-items:center;justify-content:space-between;gap:24px;padding-top:14px;padding-bottom:14px}
+.brand{display:block;line-height:0}
+.logo{width:160px;height:auto;aspect-ratio:944/543}
+.nav{display:flex;gap:36px}
+.nav a{font-size:12px;font-weight:600;letter-spacing:.22em;text-transform:uppercase;text-decoration:none;color:var(--on-navy)}
+.nav a:hover{color:var(--white)}
+.head-cta{min-height:44px;padding:0 22px}
+
+/* hero */
+.hero{position:relative;overflow:hidden;color:var(--near-white);padding-bottom:150px;
+  background:radial-gradient(800px 560px at 88% 8%,rgba(107,122,254,.22),transparent 62%),radial-gradient(700px 520px at 0% 100%,rgba(156,83,226,.16),transparent 62%),linear-gradient(165deg,var(--navy) 0%,var(--navy-2) 100%)}
+.hero-grid{position:relative;z-index:2;display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,1fr);gap:56px;align-items:center;padding-top:44px}
+.hero h1{font-size:clamp(34px,2.6vw + 25px,66px);line-height:1.06;margin:22px 0 26px}
+.hero h1 span{display:block}
+.lede{font-size:18px;line-height:1.65;color:var(--on-navy);max-width:31em}
+.hero-actions{display:flex;flex-wrap:wrap;gap:14px;margin-top:36px}
+.orbits{position:absolute;z-index:1;right:-140px;top:40px;width:900px;max-width:none;pointer-events:none}
+
+/* app mock */
+.mock{position:relative;border-radius:20px;overflow:hidden;display:grid;grid-template-columns:150px minmax(0,1fr);background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.14);box-shadow:0 30px 80px rgba(3,0,20,.45);backdrop-filter:blur(6px)}
+.mock-side{padding:22px 12px;display:flex;flex-direction:column;gap:4px}
+.mock-tag{font-size:11px;font-weight:600;letter-spacing:.3em;color:var(--on-navy);padding:0 12px 18px}
+.mock-item{display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:999px;font-size:13px;color:var(--on-navy)}
+.mock-item .ico{width:17px;height:17px}
+.mock-item.on{background:rgba(156,83,226,.32);color:var(--white)}
+.mock-main{background:var(--gray);color:var(--navy);padding:20px}
+.mock-top{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:14px}
+.mock-title{font-size:15px;font-weight:600}
+.mock-sub{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--muted)}
+.live-dot{width:7px;height:7px;border-radius:50%;background:#22A06B;box-shadow:0 0 0 3px rgba(34,160,107,.18)}
+.mock-btn{font-size:12px;font-weight:600;color:var(--white);background:var(--violet);border-radius:7px;padding:7px 11px;white-space:nowrap}
+.flow-card{background:var(--white);border-radius:14px;box-shadow:var(--shadow);overflow:hidden}
+.flow{display:block;width:100%;height:auto;font-family:var(--font)}
+.mock-log{margin-top:12px;display:grid;gap:8px}
+.log-row{display:flex;align-items:center;gap:10px;background:var(--white);border-radius:10px;padding:9px 12px;font-size:12.5px}
+.log-row b{font-weight:600}
+.log-row time{margin-left:auto;color:var(--muted);font-size:12px}
+.log-row .dot{width:8px;height:8px;border-radius:50%;background:var(--grad);flex:none}
+
+/* examples */
+.work{position:relative;z-index:4;margin-top:-104px}
+.work-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px}
+.ex{position:relative;background:var(--white);border-radius:18px;box-shadow:0 18px 48px rgba(13,3,59,.12),0 2px 8px rgba(13,3,59,.06);padding:28px 28px 30px;overflow:hidden;min-height:250px}
+.ex .eyebrow{font-size:11px;letter-spacing:.22em}
+.ex-num{font-size:44px;font-weight:600;letter-spacing:-.02em;line-height:1.1;margin:16px 0 10px}
+.ex p{font-size:15px;color:var(--muted);max-width:23em}
+.ex-art{display:block;width:96px;height:56px;margin-bottom:22px}
+.work-note{margin-top:22px;font-size:14px;color:var(--muted)}
+
+/* what loop does */
+.does{background:var(--wash);padding:120px 0 110px;margin-top:-60px}
+.does-grid{display:grid;grid-template-columns:minmax(0,.95fr) minmax(0,2fr);gap:64px;align-items:start;padding-top:60px}
+.h2{font-size:clamp(32px,3.5vw,46px);line-height:1.12;margin:18px 0 18px}
+.does-intro p{color:var(--muted);font-size:17px;margin-bottom:30px}
+.pillars{display:grid;grid-template-columns:repeat(4,minmax(0,1fr))}
+.pillar{padding:0 24px;border-left:1px solid var(--line)}
+.pillar:first-child{border-left:0;padding-left:0}
+.tile{width:62px;height:62px;border-radius:15px;background:var(--white);box-shadow:var(--shadow);display:grid;place-items:center;margin-bottom:22px}
+.tile .ico{width:28px;height:28px}
+.pillar h3{font-size:13px;font-weight:600;letter-spacing:.22em;text-transform:uppercase;margin-bottom:10px}
+.pillar p{font-size:15px;color:var(--muted)}
+
+/* how it works */
+.how{padding:110px 0}
+.how-head{max-width:640px}
+.steps{position:relative;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:40px;margin-top:56px;list-style:none;padding:0}
+.steps::before{content:"";position:absolute;left:22px;right:22px;top:22px;height:1px;background:linear-gradient(90deg,rgba(156,83,226,.15),rgba(156,83,226,.8),rgba(107,122,254,.8))}
+.step{position:relative}
+.step-num{position:relative;width:44px;height:44px;border-radius:50%;display:grid;place-items:center;background:var(--white);border:1px solid var(--line);font-size:13px;font-weight:600;letter-spacing:.06em;margin-bottom:24px}
+.step:last-child .step-num{background:var(--grad);border-color:transparent;color:var(--white)}
+.step h3{font-size:24px;font-weight:400;margin-bottom:10px}
+.step p{color:var(--muted);max-width:22em}
+
+/* contact */
+.contact{position:relative;overflow:hidden;color:var(--near-white);background:radial-gradient(700px 500px at 100% 0%,rgba(107,122,254,.18),transparent 62%),linear-gradient(170deg,var(--navy) 0%,var(--navy-2) 100%);padding:110px 0 0}
+.contact-grid{position:relative;z-index:2;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:72px;align-items:start}
+.contact h2{font-size:clamp(36px,4.4vw,58px);line-height:1.08;margin:18px 0 18px}
+.contact .sub{font-size:clamp(22px,2.2vw,28px);font-weight:300;line-height:1.3;max-width:18em}
+.reach{list-style:none;padding:0;margin:44px 0 0;display:grid;gap:14px}
+.reach a{display:inline-flex;align-items:center;gap:14px;text-decoration:none;font-size:18px}
+.reach a:hover{text-decoration:underline;text-underline-offset:4px}
+.reach .tile{width:46px;height:46px;border-radius:12px;margin:0;background:rgba(255,255,255,.07);box-shadow:none;border:1px solid rgba(255,255,255,.14)}
+.reach .tile .ico{width:20px;height:20px}
+.form-card{background:var(--white);color:var(--navy);border-radius:20px;padding:34px;box-shadow:0 30px 80px rgba(3,0,20,.4)}
+.form-card h3{font-size:22px;font-weight:400;margin-bottom:6px}
+.form-card .hint{font-size:14px;color:var(--muted);margin-bottom:24px}
+.fields{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.field{display:grid;gap:7px}
+.field.full{grid-column:1/-1}
+.field label{font-size:13px;font-weight:600}
+.field label small{font-weight:400;color:var(--muted);font-size:12px}
+.field input,.field textarea{width:100%;font:400 16px/1.4 var(--font);color:var(--navy);background:var(--white);border:1px solid #CDD1E1;border-radius:10px;padding:12px 14px;transition:border-color .15s ease,box-shadow .15s ease}
+.field textarea{min-height:130px;resize:vertical}
+.field input:focus,.field textarea:focus{outline:0;border-color:var(--peri);box-shadow:0 0 0 3px rgba(107,122,254,.2)}
+.trap{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
+.form-foot{display:flex;flex-wrap:wrap;align-items:center;gap:16px;margin-top:22px}
+.status{font-size:14px;min-height:1.4em}
+.status.ok{color:#17734D}
+.status.err{color:#B3261E}
+.flowlines{position:relative;z-index:1;display:block;width:100%;height:220px;margin-top:40px}
+
+/* footer */
+.site-foot{background:var(--navy-deep);color:var(--on-navy);font-size:14px}
+.site-foot .wrap{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:20px;padding-top:28px;padding-bottom:32px}
+.foot-links{display:flex;flex-wrap:wrap;gap:8px 24px}
+.foot-links a{text-decoration:none}
+.foot-links a:hover{color:var(--white)}
+
+/* narrow screens */
+@media (max-width:1020px){
+  .hero-grid{grid-template-columns:1fr;gap:48px}
+  .orbits{top:auto;bottom:-120px;right:-260px}
+  .work-grid{grid-template-columns:1fr}
+  .ex{min-height:0}
+  .does-grid{grid-template-columns:1fr;gap:44px}
+  .contact-grid{grid-template-columns:1fr;gap:48px}
+}
+@media (max-width:860px){
+  .nav{display:none}
+  .pillars{grid-template-columns:1fr 1fr;row-gap:40px}
+  .pillar:nth-child(3){border-left:0;padding-left:0}
+  .steps{grid-template-columns:1fr;gap:34px}
+  .steps::before{left:22px;right:auto;top:22px;bottom:22px;width:1px;height:auto;background:linear-gradient(180deg,rgba(156,83,226,.2),rgba(107,122,254,.8))}
+  .step{padding-left:70px}
+  .step-num{position:absolute;left:0;top:0}
+}
+@media (max-width:560px){
+  .wrap{padding:0 16px}
+  .head-cta{padding:0 16px;letter-spacing:.12em}
+  .hero{padding-bottom:130px}
+  .hero-actions .btn{flex:1 1 100%}
+  .mock{grid-template-columns:1fr}
+  .mock-side{display:none}
+  .mock-main{padding:14px}
+  .pillars{grid-template-columns:1fr}
+  .pillar,.pillar:nth-child(3){border-left:0;padding:0}
+  .fields{grid-template-columns:1fr}
+  .form-card{padding:24px 20px}
+  .form-foot .btn{width:100%}
+  .does,.how{padding-top:80px;padding-bottom:80px}
+  .contact{padding-top:80px}
+}
+</style>
+</head>
+<body id="top">
+
+<!--LOGO-SPRITE-->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <defs>
+    <linearGradient id="ig" gradientUnits="userSpaceOnUse" x1="2" y1="2" x2="22" y2="22"><stop offset="0" stop-color="#9C53E2"/><stop offset="1" stop-color="#6B7AFE"/></linearGradient>
+    <linearGradient id="gv" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#9C53E2"/><stop offset="1" stop-color="#6B7AFE"/></linearGradient>
+    <symbol id="i-bolt" viewBox="0 0 24 24"><path d="M13 3 5 14h6l-1 7 8-11h-6l1-7z"/></symbol>
+    <symbol id="i-build" viewBox="0 0 24 24"><rect x="3.5" y="3.5" width="7" height="7" rx="1.6"/><rect x="13.5" y="3.5" width="7" height="7" rx="1.6"/><rect x="3.5" y="13.5" width="7" height="7" rx="1.6"/><path d="M17 13.5v7M13.5 17h7"/></symbol>
+    <symbol id="i-connect" viewBox="0 0 24 24"><circle cx="6" cy="6" r="2.5"/><circle cx="18" cy="6" r="2.5"/><circle cx="18" cy="18" r="2.5"/><path d="M8.5 6h7M18 8.5v7M7.8 7.8l8.4 8.4"/></symbol>
+    <symbol id="i-scale" viewBox="0 0 24 24"><path d="M4 20h16M7 16v-3M12 16V9M17 16V5"/></symbol>
+    <symbol id="i-phone" viewBox="0 0 24 24"><path d="M6 3.5h3.2l1.6 4.6-2.2 1.4a11 11 0 0 0 5.9 5.9l1.4-2.2 4.6 1.6V18a2.5 2.5 0 0 1-2.5 2.5A15.5 15.5 0 0 1 3.5 6 2.5 2.5 0 0 1 6 3.5z"/></symbol>
+    <symbol id="i-mail" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2.5"/><path d="m3.5 7 8.5 6 8.5-6"/></symbol>
+    <symbol id="i-sheet" viewBox="0 0 24 24"><rect x="4" y="3.5" width="16" height="17" rx="2"/><path d="M4 9.5h16M4 15h16M10 3.5v17"/></symbol>
+    <symbol id="i-chat" viewBox="0 0 24 24"><path d="M4 5h16v11H9.5L4 20z"/><path d="M8 9.5h8M8 12.5h5"/></symbol>
+    <symbol id="i-bell" viewBox="0 0 24 24"><path d="M6 16v-5a6 6 0 0 1 12 0v5l2 2H4z"/><path d="M10 20.5a2 2 0 0 0 4 0"/></symbol>
+    <symbol id="i-home" viewBox="0 0 24 24"><path d="M4 11 12 4l8 7v9h-5v-6H9v6H4z"/></symbol>
+    <symbol id="i-flow" viewBox="0 0 24 24"><circle cx="6" cy="6" r="2.5"/><circle cx="18" cy="18" r="2.5"/><path d="M8.5 6H14a4 4 0 0 1 4 4v5.5"/></symbol>
+    <symbol id="i-form" viewBox="0 0 24 24"><rect x="5" y="3" width="14" height="18" rx="2"/><path d="M9 8h6M9 12h6M9 16h4"/></symbol>
+    <symbol id="i-gear" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 3v3M12 18v3M3 12h3M18 12h3M5.6 5.6l2.1 2.1M16.3 16.3l2.1 2.1M5.6 18.4l2.1-2.1M16.3 7.7l2.1-2.1"/></symbol>
+    <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></symbol>
+  </defs>
+</svg>
+
+<header class="hero on-navy">
+  <div class="site-head">
+    <div class="wrap">
+      <a class="brand" href="#top" aria-label="Loop, back to top"><svg class="logo" viewBox="0 0 944 543" role="img" aria-label="Loop"><use href="#loop-logo"/></svg></a>
+      <nav class="nav" aria-label="Main">
+        <a href="#work">Work</a>
+        <a href="#does">What we do</a>
+        <a href="#how">How it works</a>
+        <a href="#contact">Contact</a>
+      </nav>
+      <a class="btn btn-light head-cta" href="#contact">Get in touch</a>
+    </div>
+  </div>
+
+  <svg class="orbits" viewBox="0 0 900 640" aria-hidden="true">
+    <ellipse cx="470" cy="330" rx="400" ry="210" transform="rotate(-14 470 330)" fill="none" stroke="#9C53E2" stroke-opacity=".28"/>
+    <ellipse cx="470" cy="330" rx="320" ry="260" transform="rotate(22 470 330)" fill="none" stroke="#6B7AFE" stroke-opacity=".2"/>
+    <circle cx="96" cy="402" r="5" fill="#9C53E2"/>
+    <circle cx="808" cy="170" r="4" fill="#6B7AFE"/>
+    <circle cx="640" cy="590" r="4" fill="#A55FA5"/>
+  </svg>
+
+  <div class="wrap hero-grid">
+    <div>
+      <span class="eyebrow">Automations for what's next</span>
+      <h1><span>Automate today.</span><span class="grad-text">Scale tomorrow.</span></h1>
+      <p class="lede">Every business does 2 kinds of work. The work you're known for, and the office work behind it. Loop builds a system that does the office part.</p>
+      <div class="hero-actions">
+        <a class="btn btn-light" href="#contact">Get in touch <svg class="ico" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+        <a class="btn btn-ghost" href="#work">See the work</a>
+      </div>
+    </div>
+
+    <div class="mock" aria-hidden="true">
+      <div class="mock-side">
+        <div class="mock-tag">LOOP</div>
+        <div class="mock-item"><svg class="ico"><use href="#i-home"/></svg>Home</div>
+        <div class="mock-item on"><svg class="ico"><use href="#i-flow"/></svg>Workflows</div>
+        <div class="mock-item"><svg class="ico"><use href="#i-form"/></svg>Forms</div>
+        <div class="mock-item"><svg class="ico"><use href="#i-gear"/></svg>Settings</div>
+      </div>
+      <div class="mock-main">
+        <div class="mock-top">
+          <div>
+            <div class="mock-title">Call-back requests</div>
+            <div class="mock-sub"><span class="live-dot"></span>Running</div>
+          </div>
+          <div class="mock-btn">+ New step</div>
+        </div>
+        <div class="flow-card">
+          <svg class="flow" viewBox="0 0 560 190">
+            <defs>
+              <pattern id="grid" width="16" height="16" patternUnits="userSpaceOnUse"><circle cx="2" cy="2" r="1" fill="#D9DCEA"/></pattern>
+              <filter id="soft" x="-20%" y="-30%" width="140%" height="170%"><feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="#0D033B" flood-opacity=".1"/></filter>
+            </defs>
+            <rect width="560" height="190" fill="url(#grid)"/>
+            <g fill="none" stroke="url(#gv)" stroke-width="2">
+              <path d="M142 66 C164 66 156 124 178 124"/>
+              <path d="M306 124 C328 124 320 66 342 66"/>
+              <path d="M470 66 C490 66 478 124 497 124"/>
+            </g>
+            <g fill="#9C53E2"><circle cx="142" cy="66" r="3.5"/><circle cx="178" cy="124" r="3.5"/><circle cx="306" cy="124" r="3.5"/><circle cx="342" cy="66" r="3.5"/><circle cx="470" cy="66" r="3.5"/></g>
+            <g filter="url(#soft)" fill="#fff"><rect x="14" y="35" width="128" height="62" rx="12"/><rect x="178" y="93" width="128" height="62" rx="12"/><rect x="342" y="35" width="128" height="62" rx="12"/></g>
+            <g fill="#F1EEFD"><rect x="26" y="50" width="32" height="32" rx="9"/><rect x="190" y="108" width="32" height="32" rx="9"/><rect x="354" y="50" width="32" height="32" rx="9"/></g>
+            <g class="ico ico-grad" style="stroke-width:1.9"><use href="#i-phone" x="32" y="56" width="20" height="20"/><use href="#i-sheet" x="196" y="114" width="20" height="20"/><use href="#i-chat" x="360" y="56" width="20" height="20"/></g>
+            <g font-size="13" font-weight="600" fill="#0D033B"><text x="66" y="63">Request</text><text x="230" y="121">Logged</text><text x="394" y="63">Text sent</text></g>
+            <g font-size="11" fill="#565B78"><text x="66" y="79">Phone line</text><text x="230" y="137">Google Sheet</text><text x="394" y="79">To the worker</text></g>
+            <circle cx="520" cy="124" r="23" fill="url(#gv)"/>
+            <path d="m510 124 7 7 13-14" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+            <text x="520" y="168" font-size="11" fill="#565B78" text-anchor="middle">Reminder set</text>
+          </svg>
+        </div>
+        <div class="mock-log">
+          <div class="log-row"><span class="dot"></span><b>Request logged</b><span>in the sheet</span><time>just now</time></div>
+          <div class="log-row"><span class="dot"></span><b>Text sent</b><span>with the phone number</span><time>just now</time></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<main>
+  <section class="work" id="work" aria-labelledby="work-title">
+    <div class="wrap">
+      <h2 class="sr-only" id="work-title">Work we built</h2>
+      <div class="work-grid">
+        <article class="ex">
+          <svg class="ex-art" viewBox="0 0 96 56" aria-hidden="true"><g fill="url(#gv)"><rect x="0" y="34" width="7" height="22" rx="2" opacity=".25"/><rect x="11" y="30" width="7" height="26" rx="2" opacity=".33"/><rect x="22" y="26" width="7" height="30" rx="2" opacity=".42"/><rect x="33" y="22" width="7" height="34" rx="2" opacity=".5"/><rect x="44" y="18" width="7" height="38" rx="2" opacity=".58"/><rect x="55" y="14" width="7" height="42" rx="2" opacity=".67"/><rect x="66" y="10" width="7" height="46" rx="2" opacity=".75"/><rect x="77" y="5" width="7" height="51" rx="2" opacity=".85"/><rect x="88" y="0" width="7" height="56" rx="2"/></g></svg>
+          <span class="eyebrow">Contracting firm</span>
+          <div class="ex-num">61 pages</div>
+          <p>Every project needed the same 9 forms, typed by hand. Now the client is typed once and the forms fill in 1 click. Hours, now minutes.</p>
+        </article>
+        <article class="ex">
+          <svg class="ex-art" viewBox="0 0 96 56" aria-hidden="true"><circle cx="34" cy="28" r="22" fill="#9C53E2" opacity=".35"/><circle cx="58" cy="20" r="18" fill="#6B7AFE" opacity=".35"/><circle cx="62" cy="38" r="16" fill="#A55FA5" opacity=".35"/></svg>
+          <span class="eyebrow">Community call-back line</span>
+          <div class="ex-num">3 places</div>
+          <p>A request comes in and lands in 3 places at once. The worker gets the number and a reminder. Nobody forgets a call.</p>
+        </article>
+        <article class="ex">
+          <svg class="ex-art" viewBox="0 0 96 56" aria-hidden="true"><path d="M4 48 C24 48 22 14 44 18 S66 46 90 10" fill="none" stroke="url(#gv)" stroke-width="2"/><circle cx="4" cy="48" r="4" fill="#9C53E2"/><circle cx="44" cy="18" r="4" fill="#9C53E2"/><circle cx="66" cy="34" r="4" fill="#6B7AFE"/><circle cx="90" cy="10" r="6" fill="#6B7AFE"/></svg>
+          <span class="eyebrow">Trash hauling company</span>
+          <div class="ex-num">1 tap</div>
+          <p>Drivers see their stops in order on the phone. 1 tap marks a stop done, and the photos go to the office with it.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="does" id="does" aria-labelledby="does-title">
+    <div class="wrap does-grid">
+      <div class="does-intro">
+        <span class="eyebrow">What we do</span>
+        <h2 class="h2" id="does-title">The office work, <span class="grad-text">done by a system.</span></h2>
+        <p>Automations, small apps and AI workflows for offices, mosdos and businesses. Built on the tools you already use where we can.</p>
+        <a class="btn btn-navy" href="#contact">Tell us the task <svg class="ico" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+      </div>
+      <div class="pillars">
+        <div class="pillar">
+          <div class="tile"><svg class="ico ico-grad" aria-hidden="true"><use href="#i-bolt"/></svg></div>
+          <h3>Automate</h3>
+          <p>Forms, follow-ups, reminders and data entry that repeat every week.</p>
+        </div>
+        <div class="pillar">
+          <div class="tile"><svg class="ico ico-grad" aria-hidden="true"><use href="#i-build"/></svg></div>
+          <h3>Build</h3>
+          <p>A small app when nothing off the shelf fits, like a phone page for drivers.</p>
+        </div>
+        <div class="pillar">
+          <div class="tile"><svg class="ico ico-grad" aria-hidden="true"><use href="#i-connect"/></svg></div>
+          <h3>Connect</h3>
+          <p>Gmail, Sheets, Calendar and your office software, passing the work to each other.</p>
+        </div>
+        <div class="pillar">
+          <div class="tile"><svg class="ico ico-grad" aria-hidden="true"><use href="#i-scale"/></svg></div>
+          <h3>Scale</h3>
+          <p>Add a worker, a truck or a new form without starting over.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="how" id="how" aria-labelledby="how-title">
+    <div class="wrap">
+      <div class="how-head">
+        <span class="eyebrow">How it works</span>
+        <h2 class="h2" id="how-title">From a phone call to a system that runs.</h2>
+      </div>
+      <ol class="steps">
+        <li class="step">
+          <div class="step-num">01</div>
+          <h3>Show us the task</h3>
+          <p>A call or a visit. You show us the work you do by hand, the way you do it now.</p>
+        </li>
+        <li class="step">
+          <div class="step-num">02</div>
+          <h3>We build it</h3>
+          <p>On your own tools where we can. You test it on real work before it's done.</p>
+        </li>
+        <li class="step">
+          <div class="step-num">03</div>
+          <h3>It runs</h3>
+          <p>We hand it over, and it runs on its own.</p>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  <section class="contact on-navy" id="contact" aria-labelledby="contact-title">
+    <div class="wrap contact-grid">
+      <div>
+        <span class="eyebrow">Contact</span>
+        <h2 id="contact-title">What do you still do by hand?</h2>
+        <p class="sub grad-text">Have us in the loop, and we'll get you out of it.</p>
+        <ul class="reach">
+          <li><a href="tel:+18455021115"><span class="tile"><svg class="ico" aria-hidden="true"><use href="#i-phone"/></svg></span>845.502.1115</a></li>
+          <li><a href="mailto:loopworkflow@gmail.com"><span class="tile"><svg class="ico" aria-hidden="true"><use href="#i-mail"/></svg></span>loopworkflow@gmail.com</a></li>
+        </ul>
+      </div>
+
+      <div class="form-card">
+        <h3>Send a message</h3>
+        <p class="hint">Tell us the task. An email or a phone number is enough to reach you.</p>
+        <!-- To send the form somewhere else, change data-endpoint to the new address. -->
+        <form id="contact-form" data-endpoint="__FORM_ENDPOINT__" novalidate>
+          <div class="fields">
+            <div class="field"><label for="f-name">Name</label><input id="f-name" name="name" autocomplete="name" required maxlength="100"></div>
+            <div class="field"><label for="f-business">Business <small>(optional)</small></label><input id="f-business" name="business" autocomplete="organization" maxlength="120"></div>
+            <div class="field"><label for="f-phone">Phone</label><input id="f-phone" name="phone" type="tel" autocomplete="tel" maxlength="40"></div>
+            <div class="field"><label for="f-email">Email</label><input id="f-email" name="email" type="email" autocomplete="email" maxlength="200"></div>
+            <div class="field full"><label for="f-message">What do you do by hand?</label><textarea id="f-message" name="message" required maxlength="5000"></textarea></div>
+          </div>
+          <div class="trap" aria-hidden="true"><label for="f-website">Website</label><input id="f-website" name="website" tabindex="-1" autocomplete="off"></div>
+          <div class="form-foot">
+            <button class="btn btn-navy" type="submit">Send <svg class="ico" aria-hidden="true"><use href="#i-arrow"/></svg></button>
+            <p class="status" id="form-status" role="status" aria-live="polite"></p>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <svg class="flowlines" viewBox="0 0 1440 220" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+      <defs><linearGradient id="fl" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#9C53E2" stop-opacity=".05"/><stop offset=".5" stop-color="#9C53E2" stop-opacity=".7"/><stop offset="1" stop-color="#6B7AFE" stop-opacity=".7"/></linearGradient></defs>
+      <g fill="none" stroke="url(#fl)" stroke-width="1.2">
+        <path d="M-10 170 C320 205 420 80 760 84 S1180 28 1450 36"/>
+        <path d="M-10 190 C320 214 420 108 760 112 S1180 58 1450 66"/>
+        <path d="M-10 210 C320 224 420 136 760 140 S1180 88 1450 96"/>
+      </g>
+      <circle cx="760" cy="84" r="6" fill="#9C53E2"/>
+      <circle cx="902" cy="94" r="6" fill="#6B7AFE"/>
+      <circle cx="1046" cy="104" r="6" fill="#9C53E2"/>
+      <circle cx="1300" cy="150" r="96" fill="#9C53E2" opacity=".14"/>
+      <circle cx="1196" cy="176" r="70" fill="#6B7AFE" opacity=".14"/>
+      <circle cx="1240" cy="104" r="58" fill="#A55FA5" opacity=".14"/>
+    </svg>
+  </section>
+</main>
+
+<footer class="site-foot">
+  <div class="wrap">
+    <svg class="logo" viewBox="0 0 944 543" role="img" aria-label="Loop"><use href="#loop-logo"/></svg>
+    <div class="foot-links">
+      <span>Automations for what's next.</span>
+      <a href="tel:+18455021115">845.502.1115</a>
+      <a href="mailto:loopworkflow@gmail.com">loopworkflow@gmail.com</a>
+    </div>
+    <span>&copy; <span id="year">2026</span> Loop</span>
+  </div>
+</footer>
+
+<script>
+(function () {
+  var y = document.getElementById('year');
+  if (y) y.textContent = new Date().getFullYear();
+
+  var form = document.getElementById('contact-form');
+  var status = document.getElementById('form-status');
+  var button = form.querySelector('button[type=submit]');
+  var openedAt = Date.now();
+  var FALLBACK = 'That did not go through. Please call 845.502.1115 or email loopworkflow@gmail.com.';
+
+  function say(text, kind) {
+    status.textContent = text;
+    status.className = 'status' + (kind ? ' ' + kind : '');
+  }
+
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    var f = form.elements;
+    if (!f.name.value.trim()) { say('Please add your name.', 'err'); f.name.focus(); return; }
+    if (!f.email.value.trim() && !f.phone.value.trim()) { say('Please add an email or a phone number.', 'err'); f.phone.focus(); return; }
+    if (f.email.value.trim() && !f.email.checkValidity()) { say('That email looks off. Please check it.', 'err'); f.email.focus(); return; }
+    if (!f.message.value.trim()) { say('Please tell us the task.', 'err'); f.message.focus(); return; }
+
+    var endpoint = form.getAttribute('data-endpoint');
+    if (!endpoint || endpoint.indexOf('http') !== 0) { say(FALLBACK, 'err'); return; }
+
+    var data = {
+      name: f.name.value.trim(),
+      business: f.business.value.trim(),
+      phone: f.phone.value.trim(),
+      email: f.email.value.trim(),
+      message: f.message.value.trim(),
+      website: f.website.value,
+      ms: Date.now() - openedAt,
+      page: location.href
+    };
+
+    button.disabled = true;
+    say('Sending...');
+    // Sent as plain text so the browser makes a simple request with no preflight.
+    fetch(endpoint, { method: 'POST', body: JSON.stringify(data) })
+      .then(function (r) { return r.json(); })
+      .then(function (j) {
+        if (!j || !j.ok) throw new Error((j && j.error) || 'failed');
+        form.reset();
+        openedAt = Date.now();
+        say('Thanks. Your message is in, and we will get back to you.', 'ok');
+      })
+      .catch(function () { say(FALLBACK, 'err'); })
+      .then(function () { button.disabled = false; });
+  });
+})();
+</script>
+</body>
+</html>
