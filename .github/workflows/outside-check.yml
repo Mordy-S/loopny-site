@@ -10,21 +10,19 @@ jobs:
       - name: DNS
         run: |
           echo "A:"; dig +short loopny.net A
-          echo "AAAA:"; dig +short loopny.net AAAA
-          echo "www:"; dig +short www.loopny.net CNAME
-          echo "MX:"; dig +short loopny.net MX
+          echo "www:"; dig +short www.loopny.net
       - name: Site
         run: |
-          curl -sS -o p.html -w "http loopny.net -> %{http_code} %{url_effective}\n" -L http://loopny.net/ || true
+          curl -sS -o p.html -w "https www -> %{http_code} %{content_type}\n" https://www.loopny.net/ || true
           grep -o "<title>[^<]*</title>" p.html || true
-          curl -sS -o /dev/null -w "https loopny.net -> %{http_code}\n" https://loopny.net/ || echo "https not ready yet"
-          curl -sS -o /dev/null -w "www -> %{http_code} %{redirect_url}\n" http://www.loopny.net/ || true
-          curl -sS -o /dev/null -w "font -> %{http_code} %{content_type}\n" http://loopny.net/fonts/PublicSans.ttf || true
-          curl -sS -o /dev/null -w "favicon -> %{http_code} %{content_type}\n" http://loopny.net/favicon.svg || true
+          grep -c "AKfycbxjeeev" p.html | sed 's/^/form address found: /' || true
+          curl -sS -o /dev/null -w "http www -> %{http_code} %{redirect_url}\n" http://www.loopny.net/ || true
+          curl -sS -o /dev/null -w "font -> %{http_code} %{content_type}\n" https://www.loopny.net/fonts/PublicSans.ttf || true
+          curl -sS -o /dev/null -w "favicon -> %{http_code} %{content_type}\n" https://www.loopny.net/favicon.svg || true
+          curl -sS -o /dev/null -w "http apex -> %{http_code} %{redirect_url}\n" http://loopny.net/ || echo "apex not resolving here yet"
+          curl -sS -o /dev/null -w "github.io -> %{http_code} %{redirect_url}\n" https://mordy-s.github.io/loopny-site/ || true
       - name: Form endpoint (no email is sent)
         run: |
           EP="https://script.google.com/macros/s/AKfycbxjeeev_iqqsulmRYHKAR9684ipTQu64UxlCMYqEh_EwuQe2hs2GqIiDYSZO5LyFtVQ/exec"
-          echo "GET:"; curl -sS -L "$EP"; echo
-          echo "POST with the hidden bot field filled (script drops it, sends nothing):"
-          curl -sS -L -D h.txt -H "Content-Type: text/plain;charset=UTF-8" -H "Origin: https://loopny.net" --data '{"name":"check","message":"check","email":"check@example.com","website":"bot","ms":5000}' "$EP"; echo
+          curl -sS -L -D h.txt -H "Content-Type: text/plain;charset=UTF-8" -H "Origin: https://www.loopny.net" --data '{"name":"check","message":"check","email":"check@example.com","website":"bot","ms":5000}' "$EP"; echo
           grep -i "access-control-allow-origin" h.txt || echo "no CORS header seen"
