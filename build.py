@@ -58,7 +58,7 @@ def main():
         f.write(favicon)
 
     with open(os.path.join(OUT, "CNAME"), "w", encoding="utf-8", newline="\n") as f:
-        f.write("www.loopny.net\n")
+        f.write("loopny.net\n")
 
     print("built docs/index.html", len(html), "chars; form endpoint:", endpoint or "(not set)")
 
