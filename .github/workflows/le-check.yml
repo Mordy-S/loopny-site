@@ -1,0 +1,26 @@
+name: le-check
+on:
+  push:
+    branches: [outside-check]
+  workflow_dispatch:
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Certificates issued (crt.sh)
+        run: |
+          curl -sS -m 90 "https://crt.sh/?q=loopny.net&output=json" | python3 -c "import sys,json; d=json.load(sys.stdin); [print(c['not_before'], c['issuer_name'], c['name_value'].replace(chr(10),',')) for c in d]" || echo "crt.sh failed"
+      - name: Let's Debug (http-01)
+        run: |
+          ID=$(curl -sS -m 30 -X POST -H "Content-Type: application/json" -d '{"method":"http-01","domain":"loopny.net"}' https://letsdebug.net | python3 -c "import sys,json; print(json.load(sys.stdin)['ID'])")
+          echo "test id $ID"
+          for i in $(seq 1 40); do
+            R=$(curl -sS -m 30 -H "Accept: application/json" "https://letsdebug.net/loopny.net/$ID")
+            echo "$R" | python3 -c "import sys,json; d=json.load(sys.stdin); sys.exit(0 if d.get('status')=='Complete' else 1)" && break
+            sleep 5
+          done
+          echo "$R" | python3 -m json.tool
+      - name: ACME path over IPv4 and IPv6
+        run: |
+          curl -sS -4 -o /dev/null -w "v4 challenge path -> %{http_code}\n" http://loopny.net/.well-known/acme-challenge/test || true
+          curl -sS -6 -o /dev/null -w "v6 challenge path -> %{http_code}\n" http://loopny.net/.well-known/acme-challenge/test || echo "no IPv6 on this runner"
